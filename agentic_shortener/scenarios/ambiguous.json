@@ -1,0 +1,9 @@
+{
+  "name": "ambiguous",
+  "kind": "ambiguous",
+  "requirement": "Make links safer and improve analytics.",
+  "open_questions": [
+    "What does safer mean: destination validation, abuse prevention, or both?",
+    "Which analytics fields and retention period are required?"
+  ]
+}

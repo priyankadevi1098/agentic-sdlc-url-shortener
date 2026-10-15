@@ -1,0 +1,6 @@
+{
+  "name": "greenfield",
+  "kind": "greenfield",
+  "requirement": "Build a URL shortener with create, redirect, click analytics, and a health endpoint.",
+  "open_questions": []
+}

@@ -1,0 +1,340 @@
+{
+  "context": {
+    "api_design": {
+      "decision": "Use SQLite for local durable storage and parameterized SQL.",
+      "endpoints": [
+        "POST /api/shorten",
+        "GET /{code} (redirect)",
+        "GET /api/analytics/{code}",
+        "GET /healthz"
+      ]
+    },
+    "decisions": [
+      {
+        "decision": "Use SQLite for local durable storage and parameterized SQL.",
+        "stage": "api_design"
+      },
+      {
+        "decision": "Pause for clarification before implementation.",
+        "stage": "human_review"
+      }
+    ],
+    "decomposition": {
+      "parallel_groups": [
+        [
+          "api_design",
+          "risk_analysis"
+        ]
+      ],
+      "synchronization_point": "human_review",
+      "work_items": [
+        {
+          "depends_on": [],
+          "id": "api-contract"
+        },
+        {
+          "depends_on": [
+            "api-contract"
+          ],
+          "id": "persistence"
+        },
+        {
+          "depends_on": [
+            "api-contract",
+            "persistence"
+          ],
+          "id": "implementation"
+        },
+        {
+          "depends_on": [
+            "implementation"
+          ],
+          "id": "validation"
+        },
+        {
+          "depends_on": [
+            "validation"
+          ],
+          "id": "documentation"
+        }
+      ]
+    },
+    "human_review": {
+      "approved": false,
+      "decision": "Pause for clarification before implementation.",
+      "open_questions": [
+        "What does safer mean: destination validation, abuse prevention, or both?",
+        "Which analytics fields and retention period are required?"
+      ]
+    },
+    "requirement_sha256": "b210cfd09bd107dbd2db560b06cef96adc5d57cb0ac75359a9dcef9fe4e3d5f8",
+    "risk_analysis": {
+      "policy": "No external calls, secrets, code execution, or publication in this prototype.",
+      "risks": [
+        {
+          "control": "Allow only HTTP(S), reject embedded credentials, bound input size.",
+          "risk": "Invalid or credential-bearing destination URLs"
+        },
+        {
+          "control": "Pause at the release gate until a human supplies approval.",
+          "risk": "Unreviewed release action"
+        }
+      ]
+    },
+    "scenario": "ambiguous",
+    "understanding": {
+      "assumptions": [],
+      "normalized_requirement": "Make links safer and improve analytics.",
+      "open_questions": [
+        "What does safer mean: destination validation, abuse prevention, or both?",
+        "Which analytics fields and retention period are required?"
+      ]
+    }
+  },
+  "events": [
+    {
+      "depends_on": [],
+      "detail": "Finished with 1 attempt(s); status=completed.",
+      "event": "completed",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "understanding"
+    },
+    {
+      "depends_on": [
+        "understanding"
+      ],
+      "detail": "Finished with 1 attempt(s); status=completed.",
+      "event": "completed",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "decomposition"
+    },
+    {
+      "depends_on": [
+        "decomposition"
+      ],
+      "detail": "Finished with 1 attempt(s); status=completed.",
+      "event": "completed",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "api_design"
+    },
+    {
+      "depends_on": [
+        "decomposition"
+      ],
+      "detail": "Finished with 1 attempt(s); status=completed.",
+      "event": "completed",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "risk_analysis"
+    },
+    {
+      "depends_on": [
+        "api_design",
+        "risk_analysis"
+      ],
+      "detail": "Open requirement questions must be resolved before implementation.",
+      "event": "safe_stop",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "human_review"
+    },
+    {
+      "depends_on": [
+        "api_design",
+        "risk_analysis"
+      ],
+      "detail": "Finished with 1 attempt(s); status=safe_stopped.",
+      "event": "safe_stopped",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "human_review"
+    },
+    {
+      "depends_on": [],
+      "detail": "upstream gate did not pass",
+      "event": "skipped",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "implementation"
+    },
+    {
+      "depends_on": [],
+      "detail": "upstream gate did not pass",
+      "event": "skipped",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "tests"
+    },
+    {
+      "depends_on": [],
+      "detail": "upstream gate did not pass",
+      "event": "skipped",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "documentation"
+    },
+    {
+      "depends_on": [],
+      "detail": "upstream gate did not pass",
+      "event": "skipped",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "release_gate"
+    },
+    {
+      "depends_on": [],
+      "detail": "Each run fingerprints its requirement and recomputes all dependent stages; no stale stage output is reused.",
+      "event": "replan_boundary",
+      "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+      "task": "workflow"
+    }
+  ],
+  "metrics": {
+    "awaiting_approval_tasks": 0,
+    "completed_tasks": 4,
+    "end_to_end_latency_ms": 2.001,
+    "failed_tasks": 0,
+    "mttr_seconds": 0.0,
+    "retry_count": 0,
+    "rollback_count": 0,
+    "skipped_tasks": 4,
+    "success_rate": 0.444
+  },
+  "requirement_sha256": "b210cfd09bd107dbd2db560b06cef96adc5d57cb0ac75359a9dcef9fe4e3d5f8",
+  "run_id": "4df2f434-2f92-4dbb-84f8-b0e29c56dd0c",
+  "scenario": "ambiguous",
+  "scenario_kind": "ambiguous",
+  "status": "safe_stopped",
+  "tasks": {
+    "api_design": {
+      "attempts": 1,
+      "dependencies": [
+        "decomposition"
+      ],
+      "output": {
+        "decision": "Use SQLite for local durable storage and parameterized SQL.",
+        "endpoints": [
+          "POST /api/shorten",
+          "GET /{code} (redirect)",
+          "GET /api/analytics/{code}",
+          "GET /healthz"
+        ]
+      },
+      "status": "completed"
+    },
+    "decomposition": {
+      "attempts": 1,
+      "dependencies": [
+        "understanding"
+      ],
+      "output": {
+        "parallel_groups": [
+          [
+            "api_design",
+            "risk_analysis"
+          ]
+        ],
+        "synchronization_point": "human_review",
+        "work_items": [
+          {
+            "depends_on": [],
+            "id": "api-contract"
+          },
+          {
+            "depends_on": [
+              "api-contract"
+            ],
+            "id": "persistence"
+          },
+          {
+            "depends_on": [
+              "api-contract",
+              "persistence"
+            ],
+            "id": "implementation"
+          },
+          {
+            "depends_on": [
+              "implementation"
+            ],
+            "id": "validation"
+          },
+          {
+            "depends_on": [
+              "validation"
+            ],
+            "id": "documentation"
+          }
+        ]
+      },
+      "status": "completed"
+    },
+    "documentation": {
+      "dependencies": [
+        "tests"
+      ],
+      "status": "skipped"
+    },
+    "human_review": {
+      "attempts": 1,
+      "dependencies": [
+        "api_design",
+        "risk_analysis"
+      ],
+      "output": {
+        "approved": false,
+        "decision": "Pause for clarification before implementation.",
+        "open_questions": [
+          "What does safer mean: destination validation, abuse prevention, or both?",
+          "Which analytics fields and retention period are required?"
+        ]
+      },
+      "status": "safe_stopped"
+    },
+    "implementation": {
+      "dependencies": [
+        "human_review"
+      ],
+      "status": "skipped"
+    },
+    "release_gate": {
+      "dependencies": [
+        "documentation",
+        "risk_analysis"
+      ],
+      "status": "skipped"
+    },
+    "risk_analysis": {
+      "attempts": 1,
+      "dependencies": [
+        "decomposition"
+      ],
+      "output": {
+        "policy": "No external calls, secrets, code execution, or publication in this prototype.",
+        "risks": [
+          {
+            "control": "Allow only HTTP(S), reject embedded credentials, bound input size.",
+            "risk": "Invalid or credential-bearing destination URLs"
+          },
+          {
+            "control": "Pause at the release gate until a human supplies approval.",
+            "risk": "Unreviewed release action"
+          }
+        ]
+      },
+      "status": "completed"
+    },
+    "tests": {
+      "dependencies": [
+        "implementation"
+      ],
+      "status": "skipped"
+    },
+    "understanding": {
+      "attempts": 1,
+      "dependencies": [],
+      "output": {
+        "assumptions": [],
+        "normalized_requirement": "Make links safer and improve analytics.",
+        "open_questions": [
+          "What does safer mean: destination validation, abuse prevention, or both?",
+          "Which analytics fields and retention period are required?"
+        ]
+      },
+      "status": "completed"
+    }
+  }
+}

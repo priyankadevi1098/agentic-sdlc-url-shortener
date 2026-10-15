@@ -1,0 +1,7 @@
+{
+  "name": "brownfield",
+  "kind": "brownfield",
+  "requirement": "Extend the existing URL shortener with click counts and last-accessed timestamps without breaking redirects.",
+  "open_questions": [],
+  "transient_failures": ["api_design"]
+}
